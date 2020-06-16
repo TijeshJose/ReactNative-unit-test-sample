@@ -1,0 +1,18 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`First page component renders correctly 1`] = `
+<View>
+  <Text
+    style={
+      Object {
+        "color": "#000",
+        "fontSize": 24,
+        "fontWeight": "bold",
+        "marginTop": 20,
+      }
+    }
+  >
+    Test
+  </Text>
+</View>
+`;
