@@ -11,6 +11,6 @@ export async function setEmail(value) {
 }
 
 //remove email for logout
-export async function removeEmail(value) {
+export async function removeEmail() {
     return await AsyncStorage.removeItem('email');
 }
