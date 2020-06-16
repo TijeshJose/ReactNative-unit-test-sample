@@ -7,7 +7,8 @@ class Login extends React.Component {
         super(props);
         this.state = {
             email: '',
-            password: ''
+            password: '',
+            error:''
         }
     }
 
@@ -19,6 +20,28 @@ class Login extends React.Component {
         this.setState({ password: text })
     }
 
+    isEmailValid = (email) => {
+        let pattern = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+        return pattern.test(String(email).toLowerCase())
+   }
+
+   async login(){
+    if(!this.state.email){
+        this.setState({ error: "Email is required" })
+        return false
+    }else if(!this.isEmailValid(this.state.email)){
+        this.setState({ error: "Invalid Email" })
+        return false
+    }else if(!this.state.password){
+        this.setState({ error: "Password is required" })
+        return false
+    }else {
+        await setEmail(this.state.email)
+        this.props.navigation.navigate('home')
+        return true
+    }
+   }
+
     render() {
         return (
             <View style={{ padding: 20, flex: 1, justifyContent: 'center' }}>
@@ -26,8 +49,9 @@ class Login extends React.Component {
                 <TextInput placeholder={'Enter you email'} value={this.state.email} onChangeText={(text) => this.setEmail(text)} />
                 <TextInput style={{ marginTop: 16 }} placeholder={'Enter you password'} secureTextEntry={true} value={this.state.password} onChangeText={(text) => this.setPassword(text)} />
                 <TouchableOpacity onPress={async () => {
-                    await setEmail(this.state.email)
-                    this.props.navigation.navigate('home')
+                    if(!await this.login()){
+                        alert(this.state.error)
+                    }
                 }} style={{ backgroundColor: '#000', padding: 10, alignItems: 'center', justifyContent: 'center', borderRadius: 5, marginTop: 20 }}>
                     <Text style={{ color: '#fff', fontSize: 16, fontWeight: '400' }}>Login</Text>
                 </TouchableOpacity>
