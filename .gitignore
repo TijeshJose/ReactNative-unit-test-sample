@@ -129,3 +129,7 @@ build/
 .gradle
 local.properties
 *.iml
+
+# OSX
+#
+.DS_Store
